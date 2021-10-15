@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace SPP3_Assembly_Browser
+namespace AssemblyBrowser.Wpf
 {
     public class OpenFileCommand : ICommand
     {

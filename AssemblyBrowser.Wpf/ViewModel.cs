@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using System.Windows.Media;
 using AssemblyBrowser.Lib.TreeComponent;
 using Microsoft.Win32;
 
-namespace SPP3_Assembly_Browser
+namespace AssemblyBrowser.Wpf
 {
     public class ViewModel:INotifyPropertyChanged
     {

@@ -7,6 +7,7 @@ using AssemblyBrowser.Lib.Extensions;
 using AssemblyBrowser.Lib.TreeComponent;
 using static System.Reflection.BindingFlags;
 
+//TODO: implement unit tests
 namespace AssemblyBrowser.Lib
 {
     public static class AssemblyBrowser
@@ -47,7 +48,7 @@ namespace AssemblyBrowser.Lib
             
             var result = assemblyInfo.Values.ToList();
             InsertExtensionMethods(result);
-
+            Extensions.Clear();
             return result;
         }
 

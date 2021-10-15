@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SPP3_Assembly_Browser
+namespace AssemblyBrowser.Wpf
 {
     /// <summary>
     /// Interaction logic for App.xaml

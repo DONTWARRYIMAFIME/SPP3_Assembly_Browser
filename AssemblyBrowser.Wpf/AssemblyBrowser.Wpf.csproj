@@ -4,7 +4,6 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
-        <RootNamespace>SPP3_Assembly_Browser</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,11 +11,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="bin\Debug\net5.0-windows" />
+      <Compile Remove="Resources\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="bin\Debug\net5.0-windows\icon.ico" />
+      <EmbeddedResource Remove="Resources\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Remove="Resources\**" />
     </ItemGroup>
 
 </Project>
