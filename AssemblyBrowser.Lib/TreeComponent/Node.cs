@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 namespace AssemblyBrowser.Lib.TreeComponent
 {
-    public abstract class Node:INode
+    public class Node:INode
     {
         public string Optional { get; set; }
         public string NodeType { get; set; }
@@ -14,6 +13,30 @@ namespace AssemblyBrowser.Lib.TreeComponent
         public string ReturnType { get; set; }
         public string Name { get; set; }
         public List<INode> Nodes { get; } = new();
+
+        public Node
+        (
+            string nodeType, 
+            string optional = "", 
+            string accessModifier = "", 
+            string typeModifier = "", 
+            string classType = "", 
+            string type = "", 
+            string returnType = "", 
+            string name = "",
+            IEnumerable<INode> nodes = null)
+        {
+            Optional = optional;
+            NodeType = nodeType;
+            AccessModifier = accessModifier;
+            TypeModifier = typeModifier;
+            ClassType = classType;
+            Type = type;
+            ReturnType = returnType;
+            Name = name;
+            AddRange(nodes);
+        }
+
         public void AddNode(INode node)
         {
             Nodes.Add(node);
@@ -21,7 +44,10 @@ namespace AssemblyBrowser.Lib.TreeComponent
         
         public void AddRange(IEnumerable<INode> nodes)
         {
-            Nodes.AddRange(nodes);
+            if (nodes != null)
+            {
+                Nodes.AddRange(nodes);    
+            }
         }
     }
 }

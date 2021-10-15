@@ -12,7 +12,7 @@ namespace AssemblyBrowser.Lib
 {
     public static class AssemblyBrowser
     {
-        private static readonly List<ExtensionMethodNode> Extensions = new();
+        private static readonly List<Node> Extensions = new();
 
         public static List<INode> GetAssemblyInfo(string filePath)
         {
@@ -25,7 +25,7 @@ namespace AssemblyBrowser.Lib
                 {
                     if (!assemblyInfo.ContainsKey(type.Namespace))
                     {
-                        assemblyInfo.Add(type.Namespace, new NamespaceNode(type.Namespace));
+                        assemblyInfo.Add(type.Namespace, new Node("[namespace]", name:type.Namespace));
                     }
 
                     var namespaceNode = assemblyInfo[type.Namespace];
@@ -39,12 +39,6 @@ namespace AssemblyBrowser.Lib
                     typeNode.AddRange(GetMethodNodes(type));
                     
                     Extensions.AddRange(GetExtensionMethodNodes(type));
-
-                    //Extensions.Add(typeNode.Type, GetExtensionMethodNodes(type));
-                    //typeNode.AddRange();
-
-                    // if (type.IsDefined(typeof(ExtensionAttribute), false))
-                    //     assemblyInfo = GetExtensionNamespaces(type, assemblyInfo);
                 }
                 else
                 {
@@ -58,82 +52,81 @@ namespace AssemblyBrowser.Lib
             return result;
         }
 
-        private static TypeNode CreateTypeNode(Type type)
+        private static Node CreateTypeNode(Type type)
         {
             var accessModifier = type.GetAccessModifier();
             var typeModifier = type.GetTypeModifier();
             var classType = type.GetClassType();
             var name = type.Name;
             
-            return new TypeNode(accessModifier, typeModifier, classType, name);
+            return new Node("[type]", accessModifier:accessModifier, typeModifier:typeModifier, classType:classType, type:name);
         }
 
-        private static IEnumerable<FieldNode> GetFieldNodes(Type type)
+        private static IEnumerable<Node> GetFieldNodes(Type type)
         {
             return (from fieldInfo in type.GetFields()
                 let accessModifier = fieldInfo.GetAccessModifier()
                 let typeModifier = fieldInfo.GetTypeModifier()
                 let filedType = fieldInfo.FieldType.ToGenericTypeString()
                 let name = fieldInfo.Name
-                select new FieldNode(accessModifier, typeModifier, filedType, name))
+                select new Node("[field]", accessModifier:accessModifier, typeModifier:typeModifier, type:filedType, name:name))
                 .ToList();
         }
         
-        private static IEnumerable<PropertyNode> GetPropertyNodes(Type type)
+        private static IEnumerable<Node> GetPropertyNodes(Type type)
         {
             return (from propertyInfo in type.GetProperties()
                     let accessModifier = propertyInfo.GetGetMethod(true).GetAccessModifier()
                     let propertyType = propertyInfo.PropertyType.ToGenericTypeString()
                     let name = propertyInfo.Name
                     let accessors = GetAccessors(propertyInfo)
-                    select new PropertyNode(accessModifier, propertyType, name, accessors))
+                    select new Node("[property]", accessModifier:accessModifier, type:propertyType, name:name, nodes:accessors))
                 .ToList();
         }
 
-        private static IEnumerable<AccessorNode> GetAccessors(PropertyInfo propertyInfo)
+        private static IEnumerable<Node> GetAccessors(PropertyInfo propertyInfo)
         {
             return (from accessor in propertyInfo.GetAccessors(true)
                     let accessModifier = accessor.GetAccessModifier()
                     let name = accessor.Name
-                    select new AccessorNode(accessModifier, name))
+                    select new Node("[accessor]", accessModifier:accessModifier, name:name))
                 .ToList();
         }
 
-        private static IEnumerable<ConstructorNode> GetConstructorNodes(Type type)
+        private static IEnumerable<Node> GetConstructorNodes(Type type)
         {
             return (from constructor in type.GetConstructors()
                     let accessModifier = constructor.GetAccessModifier()
                     let name = type.Name
                     let parameters = GetParameterNodes(constructor.GetParameters())
-                    select new ConstructorNode(accessModifier, name, parameters))
+                    select new Node("[constructor]", accessModifier:accessModifier, name:name, nodes:parameters))
                 .ToList();
         }
         
-        private static IEnumerable<MethodNode> GetMethodNodes(Type type)
+        private static IEnumerable<Node> GetMethodNodes(Type type)
         {
             return (from method in type.GetMethods(Instance | Static | Public | NonPublic | DeclaredOnly)
                     .Where(m => !m.IsSpecialName)
-                    .Where(m => !m.IsDefined(typeof(ExtensionAttribute), false))
                     let accessModifier = method.GetAccessModifier()
                     let typeModifier = method.GetTypeModifier()
                     let returnType = method.ReturnType.ToGenericTypeString()
                     let name = method.Name
                     let parameters = GetParameterNodes(method.GetParameters())
-                    select new MethodNode(accessModifier, typeModifier, returnType, name, parameters))
+                    select new Node("[method]", accessModifier:accessModifier, typeModifier:typeModifier, returnType:returnType, name:name, nodes:parameters))
                 .ToList();
         }
 
-        private static IEnumerable<ParameterNode> GetParameterNodes(IEnumerable<ParameterInfo> parameters)
+        private static IEnumerable<Node> GetParameterNodes(IEnumerable<ParameterInfo> parameters)
         {
             return (from parameter in parameters
                     let typeModifier = parameter.GetTypeModifier()
                     let parameterType = parameter.ParameterType.ToGenericTypeString()
                     let name = parameter.Name
-                    select new ParameterNode(typeModifier, parameterType, name))
+                    select new Node("[param]", typeModifier:typeModifier, type:parameterType, name:name))
                 .ToList();
         }
         
-        private static IEnumerable<ExtensionMethodNode> GetExtensionMethodNodes(Type type)
+        private static IEnumerable<Node> GetExtensionMethodNodes(Type type)
         {
             return (from method in type.GetMethods(Instance | Static | Public | NonPublic | DeclaredOnly)
                     .Where(m => !m.IsSpecialName)
@@ -143,7 +136,7 @@ namespace AssemblyBrowser.Lib
                     let returnType = method.ReturnType.ToGenericTypeString()
                     let name = method.Name
                     let parameters = GetParameterNodes(method.GetParameters())
-                    select new ExtensionMethodNode(accessModifier, typeModifier, returnType, name, parameters))
+                    select new Node("[method]", optional:"[extension]", accessModifier:accessModifier, typeModifier:typeModifier, returnType:returnType, name:name, nodes:parameters))
                 .ToList();
         }
 
