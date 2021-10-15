@@ -11,4 +11,12 @@
       <ProjectReference Include="..\AssemblyBrowser.Lib\AssemblyBrowser.Lib.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="bin\Debug\net5.0-windows" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net5.0-windows\icon.ico" />
+    </ItemGroup>
+
 </Project>

@@ -7,7 +7,6 @@ using AssemblyBrowser.Lib.Extensions;
 using AssemblyBrowser.Lib.TreeComponent;
 using static System.Reflection.BindingFlags;
 
-//TODO: implement optional task (extension methods)
 namespace AssemblyBrowser.Lib
 {
     public static class AssemblyBrowser
@@ -57,9 +56,10 @@ namespace AssemblyBrowser.Lib
             var accessModifier = type.GetAccessModifier();
             var typeModifier = type.GetTypeModifier();
             var classType = type.GetClassType();
+            var fullType = type.FullName;
             var name = type.Name;
             
-            return new Node("[type]", accessModifier:accessModifier, typeModifier:typeModifier, classType:classType, type:name);
+            return new Node("[type]", accessModifier:accessModifier, typeModifier:typeModifier, classType:classType, type:name, fullType:fullType);
         }
 
         private static IEnumerable<Node> GetFieldNodes(Type type)
@@ -67,9 +67,10 @@ namespace AssemblyBrowser.Lib
             return (from fieldInfo in type.GetFields()
                 let accessModifier = fieldInfo.GetAccessModifier()
                 let typeModifier = fieldInfo.GetTypeModifier()
-                let filedType = fieldInfo.FieldType.ToGenericTypeString()
+                let fieldType = fieldInfo.FieldType.ToGenericTypeString()
+                let fullType = fieldInfo.FieldType.FullName
                 let name = fieldInfo.Name
-                select new Node("[field]", accessModifier:accessModifier, typeModifier:typeModifier, type:filedType, name:name))
+                select new Node("[field]", accessModifier:accessModifier, typeModifier:typeModifier, type:fieldType, fullType:fullType, name:name))
                 .ToList();
         }
         
@@ -78,9 +79,10 @@ namespace AssemblyBrowser.Lib
             return (from propertyInfo in type.GetProperties()
                     let accessModifier = propertyInfo.GetGetMethod(true).GetAccessModifier()
                     let propertyType = propertyInfo.PropertyType.ToGenericTypeString()
+                    let fullType = propertyInfo.PropertyType.FullName
                     let name = propertyInfo.Name
                     let accessors = GetAccessors(propertyInfo)
-                    select new Node("[property]", accessModifier:accessModifier, type:propertyType, name:name, nodes:accessors))
+                    select new Node("[property]", accessModifier:accessModifier, type:propertyType, fullType:fullType, name:name, nodes:accessors))
                 .ToList();
         }
 
@@ -121,8 +123,9 @@ namespace AssemblyBrowser.Lib
             return (from parameter in parameters
                     let typeModifier = parameter.GetTypeModifier()
                     let parameterType = parameter.ParameterType.ToGenericTypeString()
+                    let fullType = parameter.ParameterType.FullName
                     let name = parameter.Name
-                    select new Node("[param]", typeModifier:typeModifier, type:parameterType, name:name))
+                    select new Node("[param]", typeModifier:typeModifier, type:parameterType, fullType:fullType, name:name))
                 .ToList();
         }
         
@@ -133,10 +136,11 @@ namespace AssemblyBrowser.Lib
                     .Where(m => m.IsDefined(typeof(ExtensionAttribute), false))
                     let accessModifier = method.GetAccessModifier()
                     let typeModifier = method.GetTypeModifier()
+                    let fullType = method.ReturnType.FullName
                     let returnType = method.ReturnType.ToGenericTypeString()
                     let name = method.Name
                     let parameters = GetParameterNodes(method.GetParameters())
-                    select new Node("[method]", optional:"[extension]", accessModifier:accessModifier, typeModifier:typeModifier, returnType:returnType, name:name, nodes:parameters))
+                    select new Node("[method]", optional:"[extension]", accessModifier:accessModifier, typeModifier:typeModifier, fullType:fullType, returnType:returnType, name:name, nodes:parameters))
                 .ToList();
         }
 
@@ -144,12 +148,12 @@ namespace AssemblyBrowser.Lib
         {
             foreach (var extensionMethod in Extensions)
             {
-                var extendedType = extensionMethod.Nodes[0].Type;
+                var extendedType = extensionMethod.Nodes[0].FullType;
                 foreach (var namespaceNode in nodes)
                 {
                     foreach (var typeNode in namespaceNode.Nodes)
                     {
-                        if (typeNode.Type == extendedType)
+                        if (typeNode.FullType == extendedType)
                         {
                             typeNode.AddNode(extensionMethod);
                         }

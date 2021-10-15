@@ -10,6 +10,7 @@ namespace AssemblyBrowser.Lib.TreeComponent
         public string TypeModifier { get; set; }
         public string ClassType { get; set; }
         public string Type { get; set; }
+        public string FullType { get; set; }
         public string ReturnType { get; set; }
         public string Name { get; set; }
         public List<INode> Nodes { get; } = new();
@@ -22,6 +23,7 @@ namespace AssemblyBrowser.Lib.TreeComponent
             string typeModifier = "", 
             string classType = "", 
             string type = "", 
+            string fullType = "", 
             string returnType = "", 
             string name = "",
             IEnumerable<INode> nodes = null)
@@ -32,6 +34,7 @@ namespace AssemblyBrowser.Lib.TreeComponent
             TypeModifier = typeModifier;
             ClassType = classType;
             Type = type;
+            FullType = fullType;
             ReturnType = returnType;
             Name = name;
             AddRange(nodes);

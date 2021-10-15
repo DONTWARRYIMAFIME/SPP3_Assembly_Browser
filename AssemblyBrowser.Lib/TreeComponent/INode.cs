@@ -10,6 +10,7 @@ namespace AssemblyBrowser.Lib.TreeComponent
         public string TypeModifier { get; set; }
         public string ClassType { get; set; }
         public string Type { get; set; }
+        public string FullType { get; set; }
         public string ReturnType { get; set; }
         public string Name { get; set; }
         public List<INode> Nodes { get; }
