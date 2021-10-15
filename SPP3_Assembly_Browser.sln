@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowser.Wpf", "AssemblyBrowser.Wpf\AssemblyBrowser.Wpf.csproj", "{029AB12E-D416-4439-975E-30D81030C1A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowser.Lib", "AssemblyBrowser.Lib\AssemblyBrowser.Lib.csproj", "{B8C8FE52-FF45-40AC-A616-831771E1E593}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{CC5D878D-D91A-4BD1-9E48-7356AA1FEE15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{029AB12E-D416-4439-975E-30D81030C1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029AB12E-D416-4439-975E-30D81030C1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029AB12E-D416-4439-975E-30D81030C1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029AB12E-D416-4439-975E-30D81030C1A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8C8FE52-FF45-40AC-A616-831771E1E593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C8FE52-FF45-40AC-A616-831771E1E593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C8FE52-FF45-40AC-A616-831771E1E593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C8FE52-FF45-40AC-A616-831771E1E593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC5D878D-D91A-4BD1-9E48-7356AA1FEE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5D878D-D91A-4BD1-9E48-7356AA1FEE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5D878D-D91A-4BD1-9E48-7356AA1FEE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5D878D-D91A-4BD1-9E48-7356AA1FEE15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
