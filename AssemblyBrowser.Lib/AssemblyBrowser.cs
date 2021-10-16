@@ -35,7 +35,7 @@ namespace AssemblyBrowser.Lib
                     typeNode.AddRange(GetFieldNodes(type));
                     typeNode.AddRange(GetPropertyNodes(type));
                     typeNode.AddRange(GetConstructorNodes(type));
-                    typeNode.AddNode(GetDestructor(type));
+                    typeNode.AddNode(GetDestructorNode(type));
                     typeNode.AddRange(GetMethodNodes(type));
                     
                     Extensions.AddRange(GetExtensionMethodNodes(type));
@@ -106,7 +106,7 @@ namespace AssemblyBrowser.Lib
                 .ToList();
         }
         
-        private static Node GetDestructor(Type type)
+        private static Node GetDestructorNode(Type type)
         {
             var destructor = type.GetMethod("Finalize", NonPublic | Instance | DeclaredOnly);
             if (destructor != null)
