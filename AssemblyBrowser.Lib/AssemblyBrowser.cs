@@ -7,7 +7,6 @@ using AssemblyBrowser.Lib.Extensions;
 using AssemblyBrowser.Lib.TreeComponent;
 using static System.Reflection.BindingFlags;
 
-//TODO: implement unit tests
 namespace AssemblyBrowser.Lib
 {
     public static class AssemblyBrowser

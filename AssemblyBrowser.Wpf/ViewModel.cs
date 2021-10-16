@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using AssemblyBrowser.Lib.TreeComponent;
 using Microsoft.Win32;
+using static System.String;
 
 namespace AssemblyBrowser.Wpf
 {
@@ -34,8 +36,27 @@ namespace AssemblyBrowser.Wpf
                 OpenedFile = openFileDialog.FileName;
                 OnPropertyChanged(nameof(OpenedFile));
                 
-                Namespaces = AssemblyBrowser.Lib.AssemblyBrowser.GetAssemblyInfo(OpenedFile);
+                Namespaces = Lib.AssemblyBrowser.GetAssemblyInfo(OpenedFile);
+                AddSpaces(Namespaces);
                 OnPropertyChanged(nameof(Namespaces));
+            }
+        }
+
+        private static void AddSpaces(List<INode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                var properties = node.GetType()
+                    .GetProperties()
+                    .Where(property => property.Name != "Nodes")
+                    .Where(property => !IsNullOrEmpty((string)property.GetValue(node)))
+                    .ToList();
+                
+                foreach (var property in properties)
+                {
+                    property.SetValue(node, " " + property.GetValue(node));
+                }
+                AddSpaces(node.Nodes);
             }
         }
 

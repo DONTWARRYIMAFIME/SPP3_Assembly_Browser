@@ -26,14 +26,14 @@
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate  ItemsSource="{Binding Path=Nodes}">
                         <TextBlock Padding="0, 3">
-                            <Run Text="{Binding Optional, UpdateSourceTrigger=PropertyChanged}" Foreground="#dcdcaa"/>
-                            <Run Text="{Binding NodeType, UpdateSourceTrigger=PropertyChanged}" Foreground="#89d6a2"/>
-                            <Run Text="{Binding AccessModifier, UpdateSourceTrigger=PropertyChanged}" Foreground="#569cd6"/>
-                            <Run Text="{Binding TypeModifier, UpdateSourceTrigger=PropertyChanged}" Foreground="#569cd6"/>
-                            <Run Text="{Binding ClassType, UpdateSourceTrigger=PropertyChanged}" Foreground="#569cd6"/>
-                            <Run Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" Foreground="#4ec9b0"/>
-                            <Run Text="{Binding ReturnType, UpdateSourceTrigger=PropertyChanged}" Foreground="#4ec9b0"/>
-                            <Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Foreground="#dcdcdc"/>
+                            <Run Text="{Binding Optional, UpdateSourceTrigger=PropertyChanged}" Foreground="#dcdcaa"
+                          /><Run Text="{Binding NodeType, UpdateSourceTrigger=PropertyChanged}" Foreground="#89d6a2"
+                          /><Run Text="{Binding AccessModifier, UpdateSourceTrigger=PropertyChanged}" Foreground="#569cd6"
+                          /><Run Text="{Binding TypeModifier, UpdateSourceTrigger=PropertyChanged}" Foreground="#569cd6"
+                          /><Run Text="{Binding ClassType, UpdateSourceTrigger=PropertyChanged}" Foreground="#569cd6"
+                          /><Run Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" Foreground="#4ec9b0"
+                          /><Run Text="{Binding ReturnType, UpdateSourceTrigger=PropertyChanged}" Foreground="#4ec9b0"
+                          /><Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Foreground="#dcdcdc"/>
                         </TextBlock>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
