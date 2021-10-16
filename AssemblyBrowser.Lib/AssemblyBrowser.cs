@@ -36,6 +36,7 @@ namespace AssemblyBrowser.Lib
                     typeNode.AddRange(GetFieldNodes(type));
                     typeNode.AddRange(GetPropertyNodes(type));
                     typeNode.AddRange(GetConstructorNodes(type));
+                    typeNode.AddNode(GetDestructor(type));
                     typeNode.AddRange(GetMethodNodes(type));
                     
                     Extensions.AddRange(GetExtensionMethodNodes(type));
@@ -58,7 +59,7 @@ namespace AssemblyBrowser.Lib
             var typeModifier = type.GetTypeModifier();
             var classType = type.GetClassType();
             var fullType = type.FullName;
-            var name = type.Name;
+            var name = type.ToGenericTypeString();
             
             return new Node("[type]", accessModifier:accessModifier, typeModifier:typeModifier, classType:classType, type:name, fullType:fullType);
         }
@@ -106,14 +107,29 @@ namespace AssemblyBrowser.Lib
                 .ToList();
         }
         
+        private static Node GetDestructor(Type type)
+        {
+            var destructor = type.GetMethod("Finalize", NonPublic | Instance | DeclaredOnly);
+            if (destructor != null)
+            {
+                var accessModifier = destructor.GetAccessModifier();
+                var name = "~" + type.Name;
+                return new Node("[destructor]", accessModifier: accessModifier, name: name);  
+            }
+
+            return null;
+        }
+        
         private static IEnumerable<Node> GetMethodNodes(Type type)
         {
             return (from method in type.GetMethods(Instance | Static | Public | NonPublic | DeclaredOnly)
                     .Where(m => !m.IsSpecialName)
+                    .Where(m => m.Name != "Finalize")
                     let accessModifier = method.GetAccessModifier()
                     let typeModifier = method.GetTypeModifier()
                     let returnType = method.ReturnType.ToGenericTypeString()
-                    let name = method.Name
+                    let generic = method.IsGenericMethod ? method.GetGenericArguments().ToGenericTypeString() : null
+                    let name = method.Name + generic
                     let parameters = GetParameterNodes(method.GetParameters())
                     select new Node("[method]", accessModifier:accessModifier, typeModifier:typeModifier, returnType:returnType, name:name, nodes:parameters))
                 .ToList();

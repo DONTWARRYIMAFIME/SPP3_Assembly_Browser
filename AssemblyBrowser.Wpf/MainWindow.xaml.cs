@@ -26,6 +26,8 @@ namespace AssemblyBrowser.Wpf
             InitializeComponent();
             Uri iconUri = new Uri(@"icon.ico", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
+            
+            
         }
     }
 }

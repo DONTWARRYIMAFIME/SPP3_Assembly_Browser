@@ -42,7 +42,10 @@ namespace AssemblyBrowser.Lib.TreeComponent
 
         public void AddNode(INode node)
         {
-            Nodes.Add(node);
+            if (node != null)
+            {
+                Nodes.Add(node);
+            }
         }
         
         public void AddRange(IEnumerable<INode> nodes)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TestProject
 {
     public interface IInterface<T, U>
@@ -5,5 +7,7 @@ namespace TestProject
         public T Generate();
         
         public U GenerateInstance();
+
+        public string GetString<TR, TU, TT>();
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AssemblyBrowser.Wpf"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Assembly Browser" Height="600" Width="800">
+        Title="Assembly Browser" Height="600" Width="800" MinHeight="450" MinWidth="800">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
@@ -17,14 +17,14 @@
                     <MenuItem Header="Open" Command="{Binding OpenFileCommand}" Background="#252526" Foreground="#dcdcdc" FontFamily="Consolas"/>
                 </MenuItem>
             </Menu>
-            <StatusBar DockPanel.Dock="Bottom" Background="#1e1e1e" Foreground="#dcdcaa" FontSize="15" FontFamily="Consolas" Padding="0, 5">
+            <StatusBar DockPanel.Dock="Bottom" Background="#1e1e1e" Foreground="#dcdcaa" FontSize="15" FontFamily="Consolas" Padding="5">
                 <StatusBarItem>
                     <TextBlock Text="{Binding OpenedFile}"/>
                 </StatusBarItem>
             </StatusBar>
             <TreeView ItemsSource="{Binding Path=Namespaces}" DockPanel.Dock="Top" Background="#252526" FontSize="14" FontFamily="Consolas" Padding="0, 10" BorderThickness="0">
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                    <HierarchicalDataTemplate  ItemsSource="{Binding Path=Nodes}">
                         <TextBlock Padding="0, 3">
                             <Run Text="{Binding Optional, UpdateSourceTrigger=PropertyChanged}" Foreground="#dcdcaa"/>
                             <Run Text="{Binding NodeType, UpdateSourceTrigger=PropertyChanged}" Foreground="#89d6a2"/>

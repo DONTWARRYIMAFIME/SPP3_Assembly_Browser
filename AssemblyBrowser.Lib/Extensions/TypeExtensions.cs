@@ -18,6 +18,12 @@ namespace AssemblyBrowser.Lib.Extensions
             return genericTypeName + "<" + genericArgs + ">";
         }
         
+        public static string ToGenericTypeString(this Type[] types)
+        {
+            var listTypes = types.Select(type => type.ToGenericTypeString()).ToList();
+            return "<" + string.Join(", ", listTypes) + ">";
+        }
+        
         public static string GetAccessModifier(this Type type)
         {
             if (type.IsNestedPublic || type.IsPublic)
@@ -40,6 +46,8 @@ namespace AssemblyBrowser.Lib.Extensions
         
         public static string GetClassType(this Type type)
         {
+            if (type.GetMethods().Any(m => m.Name == "<Clone>$"))
+                return "record";
             if (type.IsClass)
                 return "class";
             if (type.IsEnum)

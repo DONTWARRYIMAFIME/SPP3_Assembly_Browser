@@ -13,6 +13,10 @@ namespace TestProject
             _string1 = string1;
             _int1 = int1;
         }
+
+        ~Class1()
+        {
+        }
     }
     
     public abstract class Class2
