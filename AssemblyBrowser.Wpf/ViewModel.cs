@@ -13,7 +13,7 @@ namespace AssemblyBrowser.Wpf
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand OpenFileCommand => new OpenFileCommand(OpenAssembly);
         public string OpenedFile { get; set; } = "File not opened";
-        public List<INode> Namespaces { get; set; }
+        public IEnumerable<INode> Namespaces { get; set; }
         
         private void OnPropertyChanged(string propertyName)
         {
@@ -42,7 +42,7 @@ namespace AssemblyBrowser.Wpf
             }
         }
 
-        private static void AddSpaces(List<INode> nodes)
+        private static void AddSpaces(IEnumerable<INode> nodes)
         {
             foreach (var node in nodes)
             {
